@@ -53,7 +53,7 @@ public class ball : MonoBehaviour
                 break;
             case BallColors.Brown:
                 point = 4;
-                rd.material.color = new Color(145, 81, 9, 255);
+                rd.material.color = new Color(150, 75, 0, 255);
                 break;
             case BallColors.Blue:
                 point = 5;

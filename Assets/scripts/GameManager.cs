@@ -10,6 +10,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private int playerScore;
     [SerializeField] private GameObject ballPrefab;
     [SerializeField] private GameObject[] ballPositions;
+
+    [SerializeField] private GameObject cueBall;
+
+    [SerializeField] private GameObject ballline;
+    [SerializeField] private float xInput;
     // Start is called before the first frame update
     void Start()
     {
@@ -27,7 +32,7 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        RotateBall();
     }
 
     void SetBalls(BallColors color, int pos)
@@ -35,5 +40,11 @@ public class GameManager : MonoBehaviour
        GameObject ball = Instantiate(ballPrefab, ballPositions[pos].transform.position,Quaternion.identity);
        ball b = ball.GetComponent<ball>();
        b.SetColorAndPoint(color);
+    }
+
+    void RotateBall()
+    {
+        xInput = Input.GetAxis("Horizontal");
+        cueBall.transform.Rotate(new Vector3(0f,xInput,0f));
     }
 }
