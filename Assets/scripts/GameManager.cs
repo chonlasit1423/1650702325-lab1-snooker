@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour
     
     
     [SerializeField] private int playerScore;
+    public int PlayerScore { get; set; }
     [SerializeField] private GameObject ballPrefab;
     [SerializeField] private GameObject[] ballPositions;
 
@@ -19,15 +21,17 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float force;
 
     [SerializeField] private GameObject camera;
-    // Start is called before the first frame update
+    [SerializeField] private TMP_Text scoreText;
+
     void Start()
     {
         instance = this;
 
         camera = Camera.main.gameObject;
         CameraBehindBall();
+        UpdateScoreText();
         
-        SetBalls(BallColors.White, 0);
+        //SetBalls(BallColors.White, 0);
         SetBalls(BallColors.Red, 1);
         SetBalls(BallColors.Yellow, 2);
         SetBalls(BallColors.Green, 3);
@@ -50,7 +54,12 @@ public class GameManager : MonoBehaviour
         {
             StopBall();
         }
-        
+
+    }
+
+    public void UpdateScoreText()
+    {
+        scoreText.text = $"PlayerScore: {PlayerScore}";
     }
 
     void SetBalls(BallColors color, int pos)
@@ -78,17 +87,18 @@ public class GameManager : MonoBehaviour
     {
         
         camera.transform.parent = cueBall.transform;
-        camera.transform.position = cueBall.transform.position + new Vector3(0f, 40, - 20f);
+        camera.transform.position = cueBall.transform.position + new Vector3(0f, 40, - 15f);
     }
 
     void StopBall()
     {
+        ballline.SetActive(true);
         Rigidbody rd = cueBall.GetComponent<Rigidbody>();
         rd.velocity = Vector3.zero;
         rd.angularVelocity = Vector3.zero;
         cueBall.transform.eulerAngles = Vector3.zero;
         CameraBehindBall();
         camera.transform.eulerAngles = new Vector3(40f, 0f, 0f);
-        ballline.SetActive(true);
+        
     }
 }
